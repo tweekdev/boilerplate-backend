@@ -141,10 +141,11 @@ exports.login = async (user) => {
       userId: existingUser.id,
       email: existingUser.email,
       token: token,
+      isAdmin: existingUser.isAdmin,
       pseudo: existingUser.pseudo,
     });
   } catch (e) {
-    throw new Error("Une erreur c'est produite.", e);
+    throw new Error("Une erreur c'est produite.");
   }
 };
 

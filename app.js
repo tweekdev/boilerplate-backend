@@ -5,19 +5,20 @@ const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
 const mainRouter = require('./main.router');
-const tabsRoute = require('./routes/tabs-routes');
-const tabsTutosRoute = require('./routes/tutos-tabs-routes');
-const tutorialsRoute = require('./routes/tutorials-routes');
 const colors = require('./colors')
 require('dotenv').config();
 
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
 app.use(cors());
-// Access-Control-Allow-Origin *
-
 app.options('*', cors());
-// app.options('/api/v1/tours/:id', cors());
+// Access-Control-Allow-Origin *
+//route files
+app.use(
+    '/api/tweektabs/uploads/images',
+    express.static(__dirname + '/uploads/images')
+);
+app.use(express.static(path.join('public')));
 
 
 //----------------------------------------------------------------
@@ -29,18 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //----------------------------------------------------------------
 //routes
 mainRouter(app);
-app.use('/api/tweektabs/tabs', tabsRoute);
-app.use('/api/tweektabs/tutorials', tutorialsRoute);
-app.use('/api/tweektabs/tabsTutos', tabsTutosRoute);
-//----------------------------------------------------------------
 
-//----------------------------------------------------------------
-//route files
-app.use(
-    '/api/tweektabs/uploads/images',
-    express.static(__dirname + '/uploads/images')
-);
-app.use(express.static(path.join('public')));
 //----------------------------------------------------------------
 
 app.use((req, res, next) => {
